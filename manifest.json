@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Freebies Link Extractor",
+  "version": "1.0",
+  "description": "Extracts freebie links from GG Deals.",
+  "permissions": ["activeTab", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://gg.deals/news/freebies/"],
+      "js": ["content.js"]
+    }
+  ]
+}
