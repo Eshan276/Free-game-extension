@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    clearBadge();
     const response = await fetch("https://gg.deals/news/freebies/");
     const text = await response.text();
     console.log("Fetched HTML content:", text);
@@ -64,3 +65,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("links").textContent = "Error fetching links.";
   }
 });
+function clearBadge() {
+  chrome.action.setBadgeText({ text: "" });
+}
