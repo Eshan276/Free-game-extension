@@ -100,12 +100,12 @@ async function checkForNewGames(flag) {
   if (newGames.length === 0) return;
 
   const latestGame = newGames[0];
-
+  console.log("latestGame", latestGame);
   chrome.storage.local.get("lastGame", (result) => {
     const storedGame = result.lastGame;
     console.log("storedGame", storedGame);
     console.log("checking if game is present");
-    if (!storedGame || storedGame.url !== latestGame.url) {
+    if (!storedGame || storedGame.title !== latestGame.title) {
       console.log("setting badge");
       setBadge();
       chrome.storage.local.set({ lastGame: latestGame });
