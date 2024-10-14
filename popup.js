@@ -98,7 +98,37 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         linkInfoDiv.appendChild(headline);
         linkInfoDiv.appendChild(anchor);
+        const button = document.createElement("button");
+        button.textContent = "Go To Deal";
+        button.addEventListener("click", async () => {
+          try {
+            const response = await fetch(link.url);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, "text/html");
 
+            const dealLink = doc.evaluate(
+              '//a[contains(text(), "Go To Deal")]',
+              doc,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE,
+              null
+            ).singleNodeValue;
+
+            let dealUrl = dealLink ? dealLink.href : "";
+            if (dealUrl && !dealUrl.startsWith("http")) {
+              dealUrl = `https://gg.deals${"/us" + dealUrl.split("/us")[1]}`;
+            }
+            if (dealUrl) {
+              window.open(dealUrl, "_blank");
+            } else {
+              console.error("Deal URL not found.");
+            }
+          } catch (error) {
+            console.error("Error fetching deal URL:", error);
+          }
+        });
+        linkInfoDiv.appendChild(button);
         linkDiv.appendChild(image);
         linkDiv.appendChild(linkInfoDiv);
 
